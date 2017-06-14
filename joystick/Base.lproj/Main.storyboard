@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Joystick View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="JoystickViewController" customModule="joystick" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VHf-kw-XVb" customClass="JoystickView" customModule="joystick" customModuleProvider="target">
+                                <rect key="frame" x="107" y="253.5" width="160" height="160"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="160" id="RBl-H5-Tk7"/>
+                                    <constraint firstAttribute="height" constant="160" id="lDX-ID-Q9T"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bQA-1F-i5J">
+                                <rect key="frame" x="159" y="198.5" width="56" height="30"/>
+                                <state key="normal" title="Forward"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6lo-fa-QeY">
+                                <rect key="frame" x="149.5" y="438.5" width="75" height="30"/>
+                                <state key="normal" title="Backwards"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bGK-Ai-ln4">
+                                <rect key="frame" x="292" y="318" width="36" height="30"/>
+                                <state key="normal" title="Right"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6od-sl-Fix">
+                                <rect key="frame" x="52" y="318" width="30" height="30"/>
+                                <state key="normal" title="Left"/>
+                            </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="NnP-j0-TyF">
+                                <rect key="frame" x="310" y="47" width="51" height="31"/>
+                                <connections>
+                                    <action selector="tiltButtonAction:" destination="BYZ-38-t0r" eventType="valueChanged" id="OKA-9z-hi5"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tilt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rfn-2j-mmv">
+                                <rect key="frame" x="265" y="52" width="24" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="bGK-Ai-ln4" firstAttribute="centerY" secondItem="VHf-kw-XVb" secondAttribute="centerY" id="3Na-xH-koJ"/>
+                            <constraint firstItem="VHf-kw-XVb" firstAttribute="leading" secondItem="6od-sl-Fix" secondAttribute="trailing" constant="25" id="4iX-Y1-EsP"/>
+                            <constraint firstItem="VHf-kw-XVb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="AMX-qa-LxG"/>
+                            <constraint firstItem="6od-sl-Fix" firstAttribute="centerY" secondItem="VHf-kw-XVb" secondAttribute="centerY" id="CYL-2U-37j"/>
+                            <constraint firstItem="6lo-fa-QeY" firstAttribute="centerX" secondItem="VHf-kw-XVb" secondAttribute="centerX" id="E66-CL-Tea"/>
+                            <constraint firstItem="bGK-Ai-ln4" firstAttribute="leading" secondItem="VHf-kw-XVb" secondAttribute="trailing" constant="25" id="KoG-gF-SHD"/>
+                            <constraint firstItem="NnP-j0-TyF" firstAttribute="leading" secondItem="rfn-2j-mmv" secondAttribute="trailing" constant="21" id="QG1-8Z-Avb"/>
+                            <constraint firstItem="VHf-kw-XVb" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="QOj-sP-61T"/>
+                            <constraint firstItem="6lo-fa-QeY" firstAttribute="top" secondItem="VHf-kw-XVb" secondAttribute="bottom" constant="25" id="aUN-ie-9Cu"/>
+                            <constraint firstItem="NnP-j0-TyF" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="27" id="fa1-xy-bzX"/>
+                            <constraint firstItem="VHf-kw-XVb" firstAttribute="top" secondItem="bQA-1F-i5J" secondAttribute="bottom" constant="25" id="jx4-Ua-1Rx"/>
+                            <constraint firstItem="bQA-1F-i5J" firstAttribute="centerX" secondItem="VHf-kw-XVb" secondAttribute="centerX" id="kL6-Az-HoK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="NnP-j0-TyF" secondAttribute="trailing" id="lRN-1t-h6p"/>
+                            <constraint firstItem="rfn-2j-mmv" firstAttribute="centerY" secondItem="NnP-j0-TyF" secondAttribute="centerY" id="zBt-PN-wVu"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="downArrowButton" destination="6lo-fa-QeY" id="dTH-fu-hEU"/>
+                        <outlet property="joystickView" destination="VHf-kw-XVb" id="cwP-yI-wfl"/>
+                        <outlet property="leftArrowButton" destination="6od-sl-Fix" id="34t-ti-dz3"/>
+                        <outlet property="rightArrowButton" destination="bGK-Ai-ln4" id="ILd-6b-Bcd"/>
+                        <outlet property="upArrowButton" destination="bQA-1F-i5J" id="2Vc-wy-cbh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+</document>

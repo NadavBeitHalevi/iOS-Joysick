@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "joystick/ViewController.swift"
+            timestampString = "514909582.051354"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "joystick/JoystickView.swift"
+            timestampString = "514910353.412759"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
+            landmarkName = "getPersentageBy(location:andDirection:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "joystick.JoystickView.(getPersentageBy in _A79CA15AB4FCAD348D93CB7B2B7D1511) (location : __C.CGPoint, andDirection : joystick.JoystickDirection) -&gt; CoreGraphics.CGFloat"
+                  moduleName = "joystick"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nadavb/Documents/Project/joystick/joystick/JoystickView.swift"
+                  timestampString = "514910107.620558"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "111"
+                  endingLineNumber = "111"
+                  offsetFromSymbolStart = "292">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "joystick.JoystickView.(getPersentageBy in _A79CA15AB4FCAD348D93CB7B2B7D1511) (location : __C.CGPoint, andDirection : joystick.JoystickDirection) -&gt; CoreGraphics.CGFloat"
+                  moduleName = "joystick"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nadavb/Documents/Project/joystick/joystick/JoystickView.swift"
+                  timestampString = "514910107.622899"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "111"
+                  endingLineNumber = "111"
+                  offsetFromSymbolStart = "1066">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
