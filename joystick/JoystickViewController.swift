@@ -21,20 +21,12 @@ class JoystickViewController : UIViewController, JoystickProtocol {
     
     
     // MARK:- Properties
-
+    
     // The divider to the amount of movement from the percentage
     // Set the max range movement
-    let maxRangeForDivider = 26
-    var joystickTimer : Timer!
-    var tiltTimer : Timer!
-    var didSetTimer : Bool = false
-    
-    var left: Int = 0
-    var right: Int = 0
+    let maxRangeForDivider = 50
     
     private var isTiltMode : Bool = false
-    
-    @IBOutlet weak var tiltLable : UILabel!
     
     private var lastDirection : JoystickDirection = JoystickDirection.none
     
@@ -51,21 +43,21 @@ class JoystickViewController : UIViewController, JoystickProtocol {
     private func initButtons() {
         self.upArrowButton.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                                        action: #selector(JoystickViewController.upTap(_:))))
-
+        
         self.upArrowButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
                                                                              action: #selector(JoystickViewController.upLongPress(_:))))
         
         self.downArrowButton.addGestureRecognizer(UITapGestureRecognizer(target: self,
-                                                                       action: #selector(JoystickViewController.downTap(_:))))
+                                                                         action: #selector(JoystickViewController.downTap(_:))))
         
         self.downArrowButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
-                                                                             action: #selector(JoystickViewController.downLongPress(_:))))
+                                                                               action: #selector(JoystickViewController.downLongPress(_:))))
         
         self.rightArrowButton.addGestureRecognizer(UITapGestureRecognizer(target: self,
-                                                                         action: #selector(JoystickViewController.rightTap(_:))))
+                                                                          action: #selector(JoystickViewController.rightTap(_:))))
         
         self.rightArrowButton.addGestureRecognizer(UILongPressGestureRecognizer(target: self,
-                                                                               action: #selector(JoystickViewController.rightLongPress(_:))))
+                                                                                action: #selector(JoystickViewController.rightLongPress(_:))))
         
         self.leftArrowButton.addGestureRecognizer(UITapGestureRecognizer(target: self,
                                                                          action: #selector(JoystickViewController.leftTap(_:))))
@@ -107,16 +99,6 @@ class JoystickViewController : UIViewController, JoystickProtocol {
         
         joystickView.joystickDelegate = nil
         joystickView.reset()
-        
-        if self.joystickTimer != nil {
-            self.joystickTimer.invalidate()
-            self.joystickTimer = nil
-        }
-        
-        if self.tiltTimer != nil {
-            self.tiltTimer.invalidate()
-            self.tiltTimer = nil
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -128,8 +110,6 @@ class JoystickViewController : UIViewController, JoystickProtocol {
         joystickView.isUserInteractionEnabled = true
     }
     
-    
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -140,192 +120,95 @@ class JoystickViewController : UIViewController, JoystickProtocol {
     }
     
     private func resetJoystick() {
-        self.right = 0
-        self.left = 0
         self.updateBackgourndImageAccordingToCurrentDirection()
     }
     
     func didMoveIn(direction: JoystickDirection, percentageOfMovement: CGFloat) -> Void {
-        var right = 0
-        var left = 0
         
         let range = Int(floor(percentageOfMovement * CGFloat.init(integerLiteral: self.maxRangeForDivider)))
+        print("Current range : \(range)")
         
-        switch direction {
-        case .up:
-            right = range
-            left = range
-            break
-        case .down:
-            right = range * -1
-            left = range * -1
-            break
-        case .right:
-            right = range * -1
-            left = range
-            break
-        case .left:
-            right = range
-            left = range * -1
-            break
-        case .none:
-            right = 0
-            left = 0
-        }
-        
-        if abs(left) > abs(self.left) &&  abs(left) >= self.maxRangeForDivider - 2  {
+        if abs(range) >= self.maxRangeForDivider - 2  {
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
         }
-        self.left = left
-        self.right = right
+        
         self.updateBackgourndImageAccordingToCurrentDirection()
     }
     
-    
-    private func backgroundImageBy(currentRange : Int) -> UIImage {
-        
-        var backroundImage = #imageLiteral(resourceName: "joystick_base_view")
-        let directionValue = currentRange
-        
-        if self.left > 0 && self.right > 0 { // up
-            if self.isThumbReachedHalfwayDistanceFromCenter(currentPosition: directionValue) {
-                backroundImage = #imageLiteral(resourceName: "joystick_up_halfway")
-            }
-            else if self.isThumbReachedFullDistanceFromCenter(currentPosition: directionValue) {
-                backroundImage = #imageLiteral(resourceName: "joystick_up_full")
-            }
-            else {
-                backroundImage = #imageLiteral(resourceName: "joystick_base_view")
-            }
-        }
-        if self.right < 0 && self.left > 0 { // right
-            if self.isThumbReachedHalfwayDistanceFromCenter(currentPosition: directionValue) {
-                backroundImage = #imageLiteral(resourceName: "joystick_right_halfway")
-            }
-            else if self.isThumbReachedFullDistanceFromCenter(currentPosition: directionValue) {
-                backroundImage = #imageLiteral(resourceName: "joystick_right_full")
-            }
-            else {
-                backroundImage = #imageLiteral(resourceName: "joystick_base_view")
-            }
-        }
-        if self.right > 0 && self.left < 0 { // left
-            if self.isThumbReachedHalfwayDistanceFromCenter(currentPosition: directionValue) {
-                backroundImage = #imageLiteral(resourceName: "joystick_left_halfway")
-            }
-            else if self.isThumbReachedFullDistanceFromCenter(currentPosition: directionValue) {
-                backroundImage = #imageLiteral(resourceName: "joystick_left_full")
-            }
-            else {
-                backroundImage = #imageLiteral(resourceName: "joystick_base_view")
-            }
-        }
-        if self.right < 0 && self.left < 0 { // down
-            if self.isThumbReachedHalfwayDistanceFromCenter(currentPosition: directionValue) {
-                backroundImage = #imageLiteral(resourceName: "joystick_down_halfway")
-            }
-            else if self.isThumbReachedFullDistanceFromCenter(currentPosition: directionValue) {
-                backroundImage = #imageLiteral(resourceName: "joystick_down_full")
-            }
-            else {
-                backroundImage = #imageLiteral(resourceName: "joystick_base_view")
-            }
-        }
-        return backroundImage
-    }
-    
     private func isThumbReachedHalfwayDistanceFromCenter(currentPosition : Int) -> Bool {
-        if abs(currentPosition) >= Int(abs(self.maxRangeForDivider) / 2) &&
-            abs(currentPosition) < Int(Double(self.maxRangeForDivider) * 0.85) {
-            return true
-        }
-        return false
+        return abs(currentPosition) >= Int(abs(self.maxRangeForDivider) / 2) &&
+            abs(currentPosition) < Int(Double(self.maxRangeForDivider) * 0.85)
     }
     
     private func isThumbReachedFullDistanceFromCenter(currentPosition : Int) -> Bool {
-        if abs(currentPosition) >= Int(Double(self.maxRangeForDivider) * 0.85) {
-            return true
-        }
-        return false
+        return abs(currentPosition) >= Int(Double(self.maxRangeForDivider) * 0.85)
     }
-    
-    @objc
-    private func startJoystickTimer() {
-        
-        if((self.joystickTimer) != nil)
-        {
-            self.joystickTimer.invalidate()
-            self.joystickTimer = nil;
-        }
-    }
-    
-
     
     /// Use it in case you want to update the background image with another
-    /// For example : riching to the end of the circle
+    /// For example : reaching to the end of the circle
     func updateBackgourndImageAccordingToCurrentDirection() {
-//        let currentCenter = self.joystickView.thumbImageView.center
-//        let centerView = self.joystickView.backgroundCenter
-//        var direction : JoystickDirection = .none
-//        var image : UIImage = #imageLiteral(resourceName: "joystick_base_view")
-//        
-//        if currentCenter.y < centerView.y && centerView.y > currentCenter.y + 15.0 {
-//            direction = .up
-//        }
-//        if currentCenter.y > centerView.y && centerView.y < currentCenter.y - 15.0 {
-//            direction = .down
-//        }
-//        if currentCenter.x < centerView.x && centerView.x > currentCenter.x + 15.0 {
-//            direction = .left
-//        }
-//        if currentCenter.x > centerView.x && centerView.x < currentCenter.x - 15.0 {
-//            direction = .right
-//        }
-//        
-//        if self.isThumbReachedHalfwayDistanceFromCenter(currentPosition: self.left) {
-//            switch direction {
-//            case .up:
-//                image = #imageLiteral(resourceName: "joystick_up_halfway")
-//                break
-//            case .right:
-//                image = #imageLiteral(resourceName: "joystick_right_halfway")
-//                break
-//            case .down:
-//                image = #imageLiteral(resourceName: "joystick_down_halfway")
-//                break
-//            case .left:
-//                image = #imageLiteral(resourceName: "joystick_left_halfway")
-//                break
-//            default:
-//                image = #imageLiteral(resourceName: "joystick_base_view")
-//            }
-//        }
-//        if self.isThumbReachedFullDistanceFromCenter(currentPosition: self.left){
-//            switch direction {
-//            case .up:
-//                image = #imageLiteral(resourceName: "joystick_up_full")
-//                break
-//            case .right:
-//                image = #imageLiteral(resourceName: "joystick_right_full")
-//                break
-//            case .down:
-//                image = #imageLiteral(resourceName: "joystick_down_full")
-//                break
-//            case .left:
-//                image = #imageLiteral(resourceName: "joystick_left_full")
-//                break
-//            default:
-//                image = #imageLiteral(resourceName: "joystick_base_view")
-//            }
-//        }
-//        DispatchQueue.main.async {
-//            UIView.transition(with: (self.joystickView.backgroundImageView)!,
-//                              duration: 0.3,
-//                              options: .transitionCrossDissolve,
-//                              animations: {
-//                                self.joystickView.backgroundImageView.image = image
-//            }, completion: nil)
-//        }
+        //        let currentCenter = self.joystickView.thumbImageView.center
+        //        let centerView = self.joystickView.backgroundCenter
+        //        var direction : JoystickDirection = .none
+        //        var image : UIImage = #imageLiteral(resourceName: "joystick_base_view")
+        //
+        //        if currentCenter.y < centerView.y && centerView.y > currentCenter.y + 15.0 {
+        //            direction = .up
+        //        }
+        //        if currentCenter.y > centerView.y && centerView.y < currentCenter.y - 15.0 {
+        //            direction = .down
+        //        }
+        //        if currentCenter.x < centerView.x && centerView.x > currentCenter.x + 15.0 {
+        //            direction = .left
+        //        }
+        //        if currentCenter.x > centerView.x && centerView.x < currentCenter.x - 15.0 {
+        //            direction = .right
+        //        }
+        //
+        //        if self.isThumbReachedHalfwayDistanceFromCenter(currentPosition: self.left) {
+        //            switch direction {
+        //            case .up:
+        //                image = #imageLiteral(resourceName: "joystick_up_halfway")
+        //                break
+        //            case .right:
+        //                image = #imageLiteral(resourceName: "joystick_right_halfway")
+        //                break
+        //            case .down:
+        //                image = #imageLiteral(resourceName: "joystick_down_halfway")
+        //                break
+        //            case .left:
+        //                image = #imageLiteral(resourceName: "joystick_left_halfway")
+        //                break
+        //            default:
+        //                image = #imageLiteral(resourceName: "joystick_base_view")
+        //            }
+        //        }
+        //        if self.isThumbReachedFullDistanceFromCenter(currentPosition: self.left){
+        //            switch direction {
+        //            case .up:
+        //                image = #imageLiteral(resourceName: "joystick_up_full")
+        //                break
+        //            case .right:
+        //                image = #imageLiteral(resourceName: "joystick_right_full")
+        //                break
+        //            case .down:
+        //                image = #imageLiteral(resourceName: "joystick_down_full")
+        //                break
+        //            case .left:
+        //                image = #imageLiteral(resourceName: "joystick_left_full")
+        //                break
+        //            default:
+        //                image = #imageLiteral(resourceName: "joystick_base_view")
+        //            }
+        //        }
+        //        DispatchQueue.main.async {
+        //            UIView.transition(with: (self.joystickView.backgroundImageView)!,
+        //                              duration: 0.3,
+        //                              options: .transitionCrossDissolve,
+        //                              animations: {
+        //                                self.joystickView.backgroundImageView.image = image
+        //            }, completion: nil)
+        //        }
     }
     
     @IBAction func tiltButtonAction(_ sender: Any) {
