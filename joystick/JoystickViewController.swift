@@ -1,6 +1,6 @@
 //
 //  JoystickViewController.swift
-//  Maytronics
+//  
 //
 //  Created by nadavb on 4/30/17.
 //
